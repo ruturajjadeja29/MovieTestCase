@@ -12,7 +12,7 @@ class MovieDetailVC: UIViewController {
     
     // MARK: -
     // MARK: - @IBOutlets.
-    @IBOutlet weak var tblVMovieDetail: UITableView!
+    @IBOutlet fileprivate weak var tblVMovieDetail: UITableView!
     
     // MARK: -
     // MARK: - View Lifecycle.
