@@ -7,3 +7,29 @@
 //
 
 import Foundation
+import RxSwift
+
+class MovieListViewModel {
+    
+    // MARK: -
+    // MARK: - Singleton.
+    
+    private init() {}
+    
+    private static var movieListViewModel:MovieListViewModel = {
+        let movieListViewModel = MovieListViewModel()
+        return movieListViewModel
+    }()
+    
+    static var shared:MovieListViewModel {
+        return movieListViewModel
+    }
+    
+    
+    
+    // MARK: -
+    // MARK: - Rx-Swift Observable.
+    
+    var movies:Variable<[TBLMovieList]> = Variable([])
+    
+}

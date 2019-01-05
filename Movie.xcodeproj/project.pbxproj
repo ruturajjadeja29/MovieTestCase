@@ -200,8 +200,8 @@
 		68CB9F1621DF6BDF00ECB348 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				68CB9F3D21DF8FE000ECB348 /* Cell */,
 				68CB9F3421DF7AF600ECB348 /* MovieListVC.swift */,
+				68CB9F3D21DF8FE000ECB348 /* Cell */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

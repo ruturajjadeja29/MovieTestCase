@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MovieListTblCell: UITableViewCell {
 
+    @IBOutlet fileprivate weak var imgVMovie: UIImageView!
+    @IBOutlet fileprivate weak var lblMovieTitle: GenericLabel!
+    @IBOutlet fileprivate weak var lblMovieReleaseDate: GenericLabel!
+    @IBOutlet fileprivate weak var lblMovieOverview: GenericLabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -18,4 +24,28 @@ class MovieListTblCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+}
+
+extension MovieListTblCell {
+    
+    func configureCell(movie: TBLMovieList) {
+        
+//        if let imgVPoster = movieList.moviePoster.URL(string) {
+//            imgVMovie.kf.setImage(with: imgVPoster)
+//        }
+        
+        if let strMovieTitle = movie.original_title {
+            lblMovieTitle.text = strMovieTitle
+        }
+        
+        if let strMovieReleaseDate = movie.release_date {
+            lblMovieReleaseDate.text = strMovieReleaseDate
+        }
+        
+        if let strMovieOverview = movie.overview {
+            lblMovieOverview.text = strMovieOverview
+        }
+        
+    }
+    
 }
