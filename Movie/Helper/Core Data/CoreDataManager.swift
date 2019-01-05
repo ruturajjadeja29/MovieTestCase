@@ -43,4 +43,7 @@ extension CoreDataManager {
     func save() {
         mainManagedObjectContext.saveChanges()
     }
+    func managedObject() -> NSManagedObjectContext {
+        return mainManagedObjectContext
+    }
 }

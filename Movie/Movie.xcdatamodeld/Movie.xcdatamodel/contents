@@ -44,7 +44,7 @@
         <attribute name="vote_count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="TBLMovieList" positionX="-63" positionY="-18" width="128" height="255"/>
         <element name="TBLMovieDetail" positionX="-54" positionY="99" width="128" height="420"/>
+        <element name="TBLMovieList" positionX="-63" positionY="-18" width="128" height="255"/>
     </elements>
 </model>

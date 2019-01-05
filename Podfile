@@ -15,6 +15,10 @@ target 'Movie' do
     # Reactive
     pod 'RxSwift'
     pod 'RxCocoa'
+    
+    # Reactive Coredata
+    pod 'RxCoreData'
+    pod 'RxDataSources'
 
   target 'MovieTests' do
     inherit! :search_paths

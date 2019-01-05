@@ -34,7 +34,7 @@ class APIRequest {
 extension APIRequest {
     
     //... BaseURL
-    fileprivate static var baseURL = "https://developers.themoviedb.org/3/"
+    fileprivate static var baseURL = "https://api.themoviedb.org/3/"
     
     fileprivate static var header:[String:String] {
         return ["Accept":"application/json" ]
@@ -178,11 +178,10 @@ extension APIRequest {
     
     func movies(successCompletion:successCompletion , failureCompletion:failureCompletion) -> URLSessionTask? {
         
-        return APIRequest.GET(apiURL: APIRequest.CMovieURL.toURL, param: nil, successCompletion: { (response, status) in
+        return APIRequest.GET(apiURL: (APIRequest.CMovieURL + "?api_key=14bc774791d9d20b3a138bb6e26e2579").toURL, param: nil, successCompletion: { (response, status) in
             if let responseDict = response as? [String:Any] , responseDict.keys.count > 0 {
-                
+                successCompletion?(responseDict, status)
             }
-            successCompletion?(nil, status)
         }, failureCompletion: { (message) in
             failureCompletion?(message)
         })
