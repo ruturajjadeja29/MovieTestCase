@@ -10,9 +10,13 @@ import UIKit
 
 class MovieDetailTblCell: UITableViewCell {
 
+    // MARK: -
+    // MARK: - @IBOutlets.
     @IBOutlet  weak var lblTitle: UILabel!
     @IBOutlet  weak var lblSubTitle: UILabel!
-    
+
+    // MARK: -
+    // MARK: - Override Methods.
     override func awakeFromNib() {
         super.awakeFromNib()
     }

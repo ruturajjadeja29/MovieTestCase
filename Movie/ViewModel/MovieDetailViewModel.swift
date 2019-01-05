@@ -35,5 +35,11 @@ extension MovieDetailViewModel {
     
     func loadMovieDetails() {
         
+        _ = APIRequest.shared.movieDetails(movieID: 297802, successCompletion: { (response, status) in
+            
+            if let responseDict = response as? [String: Any], let movieId = responseDict["id"] as? Int64 {
+                
+            }
+        }, failureCompletion: nil)
     }
 }
