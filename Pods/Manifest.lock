@@ -1,0 +1,44 @@
+PODS:
+  - Alamofire (4.8.0)
+  - Differentiator (3.1.0)
+  - Kingfisher (5.0.1)
+  - RxCocoa (4.4.0):
+    - RxSwift (~> 4.0)
+  - RxCoreData (0.5.1):
+    - RxSwift (~> 4.3.1)
+  - RxDataSources (3.1.0):
+    - Differentiator (~> 3.0)
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - RxSwift (4.3.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - Kingfisher
+  - RxCocoa
+  - RxCoreData
+  - RxDataSources
+  - RxSwift
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Differentiator
+    - Kingfisher
+    - RxCocoa
+    - RxCoreData
+    - RxDataSources
+    - RxSwift
+
+SPEC CHECKSUMS:
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
+  Kingfisher: 4f771421b9208185217550528a06fd48756cb7c2
+  RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
+  RxCoreData: fb535b9a617e9d84305b0e626fdac8162cd4b4bb
+  RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
+  RxSwift: fe0fd770a43acdb7d0a53da411c9b892e69bb6e4
+
+PODFILE CHECKSUM: 90eee4666a1455112a774d843579b07c38b25543
+
+COCOAPODS: 1.5.3

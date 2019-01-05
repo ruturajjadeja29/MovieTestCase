@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import RxSwift
 
 class MovieDetailVC: UIViewController {
     
     // MARK: -
     // MARK: - @IBOutlets.
     @IBOutlet fileprivate weak var tblVMovieDetail: UITableView!
+    
+    // MARK: -
+    // MARK: - Global Variables.
+    let disposeBag = DisposeBag()
     
     // MARK: -
     // MARK: - View Lifecycle.
@@ -38,6 +43,8 @@ extension MovieDetailVC {
     func initialize() {
     
         self.title = "Venom"
+        
+        MovieDetailViewModel.shared.loadMovieDetails()
     }
 }
 

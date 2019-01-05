@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="HIo-RP-pQX"/>
+                        <segue destination="n0y-AA-X7o" kind="relationship" relationship="rootViewController" id="AS6-21-IPq"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rwT-Cu-hNh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -35,7 +35,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="184" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ggk-gw-JpH">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MovieListCell" rowHeight="184" id="hpK-kz-TbJ" customClass="MovieListTblCell">
@@ -103,7 +103,6 @@
                                             <outlet property="lblMovieOverview" destination="jcq-rH-Fgw" id="Fq9-h9-zAI"/>
                                             <outlet property="lblMovieReleaseDate" destination="ZFJ-5q-7J7" id="Qoe-Kz-sTr"/>
                                             <outlet property="lblMovieTitle" destination="phh-Ss-yko" id="ppb-Jl-1JL"/>
-                                            <segue destination="n0y-AA-X7o" kind="showDetail" trigger="accessoryAction" id="Rd4-ov-I0e"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -137,7 +136,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BEf-Ue-VV7">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MovieDetailHeaderTblCell" rowHeight="195" id="eb5-x7-9Cv" customClass="MovieDetailHeaderTblCell" customModule="Movie" customModuleProvider="target">
@@ -188,8 +187,8 @@
                                         <connections>
                                             <outlet property="imgBackMoviePoster" destination="qGC-GC-fiU" id="Hns-9Q-mKO"/>
                                             <outlet property="imgMoviePoster" destination="zDt-hm-7dA" id="tJ4-rV-TZN"/>
-                                            <outlet property="lblMovieDiscription" destination="lF9-WT-QVN" id="lpQ-iT-T37"/>
-                                            <outlet property="lblMovieName" destination="4i3-AW-8YY" id="u1V-Yf-fHL"/>
+                                            <outlet property="lblMovieTagline" destination="lF9-WT-QVN" id="vQa-Lk-J2P"/>
+                                            <outlet property="lblMovieTitle" destination="4i3-AW-8YY" id="zIV-Wo-Jye"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieDetailTblCell" rowHeight="92" id="Hts-u9-4C8" customClass="MovieDetailTblCell" customModule="Movie" customModuleProvider="target">
