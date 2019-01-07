@@ -13,11 +13,28 @@ class MovieDetailVC: UIViewController {
     
     // MARK: -
     // MARK: - @IBOutlets.
-    @IBOutlet fileprivate weak var tblVMovieDetail: UITableView!
+    @IBOutlet fileprivate weak var imgVPoster: UIImageView!
+    @IBOutlet fileprivate weak var imgVCoverPoster: UIImageView!
+    @IBOutlet fileprivate weak var lblMovieTitle: UILabel!
+    @IBOutlet fileprivate weak var lblMovieTagline: UILabel!
+    
+    @IBOutlet fileprivate weak var tblVMovieDetail: UITableView! {
+        didSet {
+            tblVMovieDetail.estimatedRowHeight = 100.0
+            tblVMovieDetail.rowHeight = UITableView.automaticDimension
+        }
+    }
+    
+    @IBOutlet fileprivate weak var viewHeader: UIView! {
+        didSet {
+            viewHeader.CViewSetHeight(height: (CScreenWidth/375) * viewHeader.frame.height)
+        }
+    }
     
     // MARK: -
     // MARK: - Global Variables.
     let disposeBag = DisposeBag()
+    let imgHeaderUrl = "https://image.tmdb.org/t/p/w500"
     
     // MARK: -
     // MARK: - View Lifecycle.
@@ -41,10 +58,41 @@ class MovieDetailVC: UIViewController {
 extension MovieDetailVC {
     
     func initialize() {
-    
-        self.title = "Venom"
         
-        MovieDetailViewModel.shared.loadMovieDetails()
+        MovieDetailViewModel.shared.loadMovieDetailsFromServer()
+        
+        self.configureViewAppearance()
+    }
+    
+    fileprivate func configureViewAppearance() {
+        addObserverAndSubscriber()
+    }
+    
+    fileprivate func configureHeader(movieHeader: MovieHeaderModel) {
+        
+        self.lblMovieTitle.text = movieHeader.title ?? ""
+        self.lblMovieTagline.text = movieHeader.tagline ?? ""
+        self.title = movieHeader.title ?? ""
+        
+        if let urlBackDropPoster = movieHeader.backdrop_path {
+            imgVCoverPoster.kf.setImage(with: (imgHeaderUrl + urlBackDropPoster).toURL)
+        }
+        
+        if let urlPoster = movieHeader.poster_path {
+            imgVPoster.kf.setImage(with: (imgHeaderUrl + urlPoster).toURL)
+        }
+    }
+    
+    fileprivate func addObserverAndSubscriber() {
+        
+        //... Keep Observing for movieHeader Updates and Bind the Data.
+        MovieDetailViewModel.shared.movieHeader.asObservable().subscribe(onNext: { (movieHeader) in
+            self.configureHeader(movieHeader: movieHeader)
+        }, onError: nil, onCompleted: nil).disposed(by: disposeBag)
+        
+        //.. Keep Observing for movieDetails Updates and Bind the Data.
+        MovieDetailViewModel.shared.arrDetailCustom.asObservable().bind(to: tblVMovieDetail.rx.items(cellIdentifier: "MovieDetailTblCell", cellType:MovieDetailTblCell.self)) { (row, movieDetails, cell) in
+            cell.configureCell(movieDetails: movieDetails)
+            }.disposed(by: disposeBag)
     }
 }
-
