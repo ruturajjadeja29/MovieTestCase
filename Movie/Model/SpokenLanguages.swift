@@ -51,20 +51,20 @@ struct SpokenLanguages {
 
 }
 
-extension SpokenLanguages : Equatable {
+//MARK:-
+//MARK:- Extenstion for Rx CoreData
+extension SpokenLanguages: Equatable {
     static func == (lhs: SpokenLanguages, rhs: SpokenLanguages) -> Bool {
         return lhs.iso6391 == rhs.iso6391
     }
 }
 
-extension SpokenLanguages : IdentifiableType {
+extension SpokenLanguages: IdentifiableType {
     typealias Identity = String
-    
     var identity: Identity { return "\(iso6391 ?? "")" }
 }
 
-extension SpokenLanguages : Persistable {
-    
+extension SpokenLanguages: Persistable {
     typealias T = NSManagedObject
     
     static var entityName: String {
@@ -76,12 +76,11 @@ extension SpokenLanguages : Persistable {
     }
     
     init(entity: T) {
-        iso6391                = entity.value(forKey: "iso6391") as? String
-        name                  = entity.value(forKey: "name") as? String
+        iso6391         = entity.value(forKey: "iso6391") as? String
+        name            = entity.value(forKey: "name") as? String
     }
     
     func update(_ entity: T) {
-        
         entity.setValue(iso6391, forKey: "iso6391")
         entity.setValue(name, forKey: "name")
         
@@ -90,7 +89,5 @@ extension SpokenLanguages : Persistable {
         } catch let e {
             print(e)
         }
-        
     }
-    
 }

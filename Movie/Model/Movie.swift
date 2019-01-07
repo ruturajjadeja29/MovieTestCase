@@ -139,21 +139,20 @@ struct Movie {
 
 }
 
-
-extension Movie : Equatable {
+//MARK:-
+//MARK:- Extenstion for Rx CoreData
+extension Movie: Equatable {
     static func == (lhs: Movie, rhs: Movie) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
-extension Movie : IdentifiableType {
+extension Movie: IdentifiableType {
     typealias Identity = String
-    
     var identity: Identity { return "\(id ?? 0)" }
 }
 
-extension Movie : Persistable {
-    
+extension Movie: Persistable {
     typealias T = NSManagedObject
     
     static var entityName: String {
@@ -165,35 +164,33 @@ extension Movie : Persistable {
     }
     
     init(entity: T) {
-        
-        budget        = entity.value(forKey: "budget") as? Int64
-        adult               = entity.value(forKey: "adult") as? Bool
-        backdropPath       = entity.value(forKey: "backdropPath") as? String
-        homepage       = entity.value(forKey: "homepage") as? String
-        genres           = entity.value(forKey: "genres") as? [Genres]
-        productionCompanies           = entity.value(forKey: "productionCompanies") as? [ProductionCompanies]
-        spokenLanguages           = entity.value(forKey: "spokenLanguages") as? [SpokenLanguages]
-        productionCountries           = entity.value(forKey: "productionCountries") as? [ProductionCountries]
-        id                  = entity.value(forKey: "id") as? Int64
-        originalLanguage   = entity.value(forKey: "originalLanguage") as? String
-        originalTitle      = entity.value(forKey: "originalTitle") as? String
-        overview            = entity.value(forKey: "overview") as? String
-        popularity          = entity.value(forKey: "popularity") as? Double
-        posterPath         = entity.value(forKey: "posterPath") as? String
-        releaseDate        = entity.value(forKey: "releaseDate") as? String
-        title               = entity.value(forKey: "title") as? String
-        video               = entity.value(forKey: "video") as? Bool
-        voteAverage        = entity.value(forKey: "voteAverage") as? Int64
-        voteCount          = entity.value(forKey: "voteCount") as? Int64
-        runtime        = entity.value(forKey: "runtime") as? Int64
-        status               = entity.value(forKey: "status") as? String
-        tagline               = entity.value(forKey: "tagline") as? String
-        imdbId        = entity.value(forKey: "imdbId") as? String
+        budget                  = entity.value(forKey: "budget") as? Int64
+        adult                   = entity.value(forKey: "adult") as? Bool
+        backdropPath            = entity.value(forKey: "backdropPath") as? String
+        homepage                = entity.value(forKey: "homepage") as? String
+        genres                  = entity.value(forKey: "genres") as? [Genres]
+        productionCompanies     = entity.value(forKey: "productionCompanies") as? [ProductionCompanies]
+        spokenLanguages         = entity.value(forKey: "spokenLanguages") as? [SpokenLanguages]
+        productionCountries     = entity.value(forKey: "productionCountries") as? [ProductionCountries]
+        id                      = entity.value(forKey: "id") as? Int64
+        originalLanguage        = entity.value(forKey: "originalLanguage") as? String
+        originalTitle           = entity.value(forKey: "originalTitle") as? String
+        overview                = entity.value(forKey: "overview") as? String
+        popularity              = entity.value(forKey: "popularity") as? Double
+        posterPath              = entity.value(forKey: "posterPath") as? String
+        releaseDate             = entity.value(forKey: "releaseDate") as? String
+        title                   = entity.value(forKey: "title") as? String
+        video                   = entity.value(forKey: "video") as? Bool
+        voteAverage             = entity.value(forKey: "voteAverage") as? Int64
+        voteCount               = entity.value(forKey: "voteCount") as? Int64
+        runtime                 = entity.value(forKey: "runtime") as? Int64
+        status                  = entity.value(forKey: "status") as? String
+        tagline                 = entity.value(forKey: "tagline") as? String
+        imdbId                  = entity.value(forKey: "imdbId") as? String
         
     }
     
     func update(_ entity: T) {
-        
         entity.setValue(budget, forKey: "budget")
         entity.setValue(adult, forKey: "adult")
         entity.setValue(backdropPath, forKey: "backdropPath")
@@ -223,7 +220,5 @@ extension Movie : Persistable {
         } catch let e {
             print(e)
         }
-        
     }
-    
 }

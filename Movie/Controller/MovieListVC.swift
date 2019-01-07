@@ -14,21 +14,18 @@ import RxDataSources
 import CoreData
 
 class MovieListVC: UIViewController {
-
+    
     // MARK: -
     // MARK: - @IBOutlets.
-    
     @IBOutlet fileprivate weak var tblVMovieList: UITableView!
-    @IBOutlet weak var activityLoader: UIActivityIndicatorView!
+    @IBOutlet fileprivate weak var activityLoader: UIActivityIndicatorView!
     
     // MARK: -
     // MARK: - Global Variables.
-    
     let disposeBag = DisposeBag()
     
     // MARK: -
-    // MARK: - View Controllers Lifecycle.
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         initialize()
@@ -42,7 +39,7 @@ class MovieListVC: UIViewController {
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
@@ -53,44 +50,40 @@ class MovieListVC: UIViewController {
 }
 
 extension MovieListVC {
-    
     fileprivate func initialize() {
-        configureViewAppearance()
-    }
-    
-    fileprivate func configureViewAppearance() {
-        MovieViewModel.shared.loadMovieListFromServer()
+        //...Load Data
+        MovieViewModel.shared.loadMoviesFromServer()
+        
+        //...Manage Observer and Subscriber
         manageObserverAndSubscriber()
     }
     
     fileprivate func manageObserverAndSubscriber() {
-        
-        //... Observe isAPIRunning property for activityIndicator.
-        
+        //...Observing isAPIRunning property for activityIndicator.
         MovieViewModel.shared.isAPIRunning.asObservable().subscribe(onNext: { (isLoading) in
-            
-            if TBLMovie.allObjects?.count ?? 0 > 0 {
-                self.activityLoader.stopAnimating()
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Movie.entityName)
+            do {
+                if let count = try CAppdelegate?.persistentContainer.viewContext.count(for: fetchRequest), count > 0 {
+                    self.activityLoader.stopAnimating()
+                }
+            } catch {
+                
             }
-            
         }, onError: nil, onCompleted: nil).disposed(by: disposeBag)
         
-        //... Configure DataSource.
         
+        //...List(UITableView) DataSource.
         let animatedDataSource = RxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, Movie>>(configureCell: { dateSource, tableView, indexPath, movie in
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieListCell", for: indexPath) as! MovieListTblCell
             cell.configureCell(movie: movie)
             return cell
-            
         })
         
-        //... Creates and executes a fetch request and returns the fetched objects as an Observable array of Persistable.
         
+        //...Creates and executes a fetch request and returns the fetched objects as an Observable array of Persistable.
         CAppdelegate?.persistentContainer.viewContext.rx.entities(Movie.self, sortDescriptors: [NSSortDescriptor(key: "id", ascending: false)]).map { movieList in
                 [AnimatableSectionModel(model: "", items: movieList)]
             }.bind(to: tblVMovieList.rx.items(dataSource: animatedDataSource)).disposed(by: disposeBag)
-        
     }
-    
 }

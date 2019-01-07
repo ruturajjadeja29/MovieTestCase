@@ -51,46 +51,43 @@ struct Genres {
 
 }
 
-//extension Genres : Equatable {
-//    static func == (lhs: Genres, rhs: Genres) -> Bool {
-//        return lhs.id == rhs.id
-//    }
-//}
-//
-//extension Genres : IdentifiableType {
-//    typealias Identity = String
-//    
-//    var identity: Identity { return "\(id ?? 0)" }
-//}
-//
-//extension Genres : Persistable {
-//    
-//    typealias T = NSManagedObject
-//    
-//    static var entityName: String {
-//        return "TBLGenres"
-//    }
-//    
-//    static var primaryAttributeName: String {
-//        return "id"
-//    }
-//    
-//    init(entity: T) {
-//        id                  = entity.value(forKey: "id") as? Int64
-//        name                = entity.value(forKey: "name") as? String
-//    }
-//    
-//    func update(_ entity: T) {
-//        
-//        entity.setValue(id, forKey: "id")
-//        entity.setValue(name, forKey: "name")
-//        
-//        do {
-//            try entity.managedObjectContext?.save()
-//        } catch let e {
-//            print(e)
-//        }
-//        
-//    }
-//    
-//}
+//MARK:-
+//MARK:- Extenstion for Rx CoreData
+extension Genres: Equatable {
+    static func == (lhs: Genres, rhs: Genres) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+extension Genres: IdentifiableType {
+    typealias Identity = String
+    var identity: Identity { return "\(id ?? 0)" }
+}
+
+extension Genres: Persistable {
+    typealias T = NSManagedObject
+    
+    static var entityName: String {
+        return "TBLGenres"
+    }
+    
+    static var primaryAttributeName: String {
+        return "id"
+    }
+    
+    init(entity: T) {
+        id          = entity.value(forKey: "id") as? Int64
+        name        = entity.value(forKey: "name") as? String
+    }
+    
+    func update(_ entity: T) {
+        entity.setValue(id, forKey: "id")
+        entity.setValue(name, forKey: "name")
+        
+        do {
+            try entity.managedObjectContext?.save()
+        } catch let e {
+            print(e)
+        }
+    }
+}

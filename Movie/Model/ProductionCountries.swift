@@ -51,20 +51,20 @@ struct ProductionCountries {
 
 }
 
-extension ProductionCountries : Equatable {
+//MARK:-
+//MARK:- Extenstion for Rx CoreData
+extension ProductionCountries: Equatable {
     static func == (lhs: ProductionCountries, rhs: ProductionCountries) -> Bool {
         return lhs.iso31661 == rhs.iso31661
     }
 }
 
-extension ProductionCountries : IdentifiableType {
+extension ProductionCountries: IdentifiableType {
     typealias Identity = String
-    
     var identity: Identity { return "\(iso31661 ?? "")" }
 }
 
-extension ProductionCountries : Persistable {
-    
+extension ProductionCountries: Persistable {
     typealias T = NSManagedObject
     
     static var entityName: String {
@@ -76,12 +76,11 @@ extension ProductionCountries : Persistable {
     }
     
     init(entity: T) {
-        iso31661                  = entity.value(forKey: "iso31661") as? String
-        name                = entity.value(forKey: "name") as? String
+        iso31661        = entity.value(forKey: "iso31661") as? String
+        name            = entity.value(forKey: "name") as? String
     }
     
     func update(_ entity: T) {
-        
         entity.setValue(iso31661, forKey: "iso31661")
         entity.setValue(name, forKey: "name")
         
@@ -90,7 +89,5 @@ extension ProductionCountries : Persistable {
         } catch let e {
             print(e)
         }
-        
     }
-    
 }
