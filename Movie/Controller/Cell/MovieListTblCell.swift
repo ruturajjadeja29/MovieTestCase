@@ -9,8 +9,13 @@
 import UIKit
 import Kingfisher
 
+let imgBaseURL = "https://image.tmdb.org/t/p/w500"
+
 class MovieListTblCell: UITableViewCell {
 
+    // MARK: -
+    // MARK: - @IBOutlets.
+    
     @IBOutlet fileprivate weak var imgVMovie: UIImageView!
     @IBOutlet fileprivate weak var lblMovieTitle: GenericLabel!
     @IBOutlet fileprivate weak var lblMovieReleaseDate: GenericLabel!
@@ -26,19 +31,21 @@ class MovieListTblCell: UITableViewCell {
 
 }
 
+
+
 extension MovieListTblCell {
     
-    func configureCell(movie: TBLMovieList) {
+    func configureCell(movie: Movie) {
         
-//        if let imgVPoster = movieList.moviePoster.URL(string) {
-//            imgVMovie.kf.setImage(with: imgVPoster)
-//        }
+        if let imgVPoster = movie.posterPath {
+            imgVMovie.kf.setImage(with: (imgBaseURL + imgVPoster).toURL)
+        }
         
-        if let strMovieTitle = movie.original_title {
+        if let strMovieTitle = movie.originalTitle {
             lblMovieTitle.text = strMovieTitle
         }
         
-        if let strMovieReleaseDate = movie.release_date {
+        if let strMovieReleaseDate = movie.releaseDate {
             lblMovieReleaseDate.text = strMovieReleaseDate
         }
         

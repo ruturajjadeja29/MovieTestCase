@@ -27,9 +27,7 @@ class MovieDetailViewModel {
     
     // MARK: -
     // MARK: - Rx-Swift Observable.
-    var arrDetailCustom:Variable<[MovieDetailModel]> = Variable([])
-    var movieHeader:Variable<MovieHeaderModel> = Variable(Mapper<MovieHeaderModel>().map(JSON: [:])!)
-    
+    var movieDetail:Variable<TBLMovie>?
 }
 
 // MARK: -
