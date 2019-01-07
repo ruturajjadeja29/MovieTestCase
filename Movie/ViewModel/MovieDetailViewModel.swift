@@ -26,7 +26,7 @@ class MovieDetailViewModel {
     
     // MARK: -
     // MARK: - Rx-Swift Observable.
-    var movieDetail:Variable<TBLMovieDetail>?
+    var movieDetail:Variable<TBLMovie>?
 }
 
 // MARK: -
