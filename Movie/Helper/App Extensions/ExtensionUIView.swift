@@ -11,39 +11,39 @@ import Foundation
 
 extension UIView {
     
-    var CViewSize:CGSize {
+    var CViewSize: CGSize {
         return self.frame.size
     }
     
-    var CViewOrigin:CGPoint {
+    var CViewOrigin: CGPoint {
         return self.frame.origin
     }
     
-    var CViewWidth:CGFloat {
+    var CViewWidth: CGFloat {
         return self.CViewSize.width
     }
     
-    var CViewHeight:CGFloat {
+    var CViewHeight: CGFloat {
         return self.CViewSize.height
     }
     
-    var CViewX:CGFloat {
+    var CViewX: CGFloat {
         return self.CViewOrigin.x
     }
     
-    var CViewY:CGFloat {
+    var CViewY: CGFloat {
         return self.CViewOrigin.y
     }
     
-    var CViewCenter:CGPoint {
+    var CViewCenter: CGPoint {
         return CGPoint(x: self.CViewWidth/2.0, y: self.CViewHeight/2.0)
     }
     
-    var CViewCenterX:CGFloat {
+    var CViewCenterX: CGFloat {
         return CViewCenter.x
     }
     
-    var CViewCenterY:CGFloat {
+    var CViewCenterY: CGFloat {
         return CViewCenter.y
     }
     
@@ -51,42 +51,42 @@ extension UIView {
 
 extension UIView {
     
-    func CViewSetSize(width:CGFloat , height:CGFloat) {
+    func CViewSetSize(width: CGFloat, height: CGFloat) {
         CViewSetWidth(width: width)
         CViewSetHeight(height: height)
     }
     
-    func CViewSetOrigin(x:CGFloat , y:CGFloat) {
+    func CViewSetOrigin(x: CGFloat, y: CGFloat) {
         CViewSetX(x: x)
         CViewSetY(y: y)
     }
     
-    func CViewSetWidth(width:CGFloat) {
+    func CViewSetWidth(width: CGFloat) {
         self.frame.size.width = width
     }
     
-    func CViewSetHeight(height:CGFloat) {
+    func CViewSetHeight(height: CGFloat) {
         self.frame.size.height = height
     }
     
-    func CViewSetX(x:CGFloat) {
+    func CViewSetX(x: CGFloat) {
         self.frame.origin.x = x
     }
     
-    func CViewSetY(y:CGFloat) {
+    func CViewSetY(y: CGFloat) {
         self.frame.origin.y = y
     }
     
-    func CViewSetCenter(x:CGFloat , y:CGFloat) {
+    func CViewSetCenter(x: CGFloat, y: CGFloat) {
         CViewSetCenterX(x: x)
         CViewSetCenterY(y: y)
     }
     
-    func CViewSetCenterX(x:CGFloat) {
+    func CViewSetCenterX(x: CGFloat) {
         self.center.x = x
     }
     
-    func CViewSetCenterY(y:CGFloat) {
+    func CViewSetCenterY(y: CGFloat) {
         self.center.y = y
     }
 }

@@ -31,18 +31,18 @@ extension MovieDetailHeaderTblCell {
     
     func configureCell() {
         
-        if let tblMovieDetail = TBLMovieDetail.allObjects?.last as? TBLMovieDetail {
-            
-            if let backdropPath = tblMovieDetail.backdrop_path?.toURL {
-                imgBackMoviePoster.kf.setImage(with: backdropPath)
-            }
-            
-            if let posterPath = tblMovieDetail.poster_path?.toURL {
-                imgMoviePoster.kf.setImage(with: posterPath)
-            }
-            
-            lblMovieTitle.text = tblMovieDetail.title
-            lblMovieTagline.text = tblMovieDetail.tagline
-        }
+//        if let tblMovieDetail = TBLMovieDetail.allObjects?.last as? TBLMovieDetail {
+//            
+//            if let backdropPath = tblMovieDetail.backdrop_path?.toURL {
+//                imgBackMoviePoster.kf.setImage(with: backdropPath)
+//            }
+//            
+//            if let posterPath = tblMovieDetail.poster_path?.toURL {
+//                imgMoviePoster.kf.setImage(with: posterPath)
+//            }
+//            
+//            lblMovieTitle.text = tblMovieDetail.title
+//            lblMovieTagline.text = tblMovieDetail.tagline
+//        }
     }
 }

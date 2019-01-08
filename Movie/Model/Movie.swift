@@ -139,21 +139,20 @@ struct Movie {
 
 }
 
-
-extension Movie : Equatable {
+//MARK:-
+//MARK:- Extenstion for Rx CoreData
+extension Movie: Equatable {
     static func == (lhs: Movie, rhs: Movie) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
-extension Movie : IdentifiableType {
+extension Movie: IdentifiableType {
     typealias Identity = String
-    
     var identity: Identity { return "\(id ?? 0)" }
 }
 
-extension Movie : Persistable {
-    
+extension Movie: Persistable {
     typealias T = NSManagedObject
     
     static var entityName: String {
@@ -232,7 +231,6 @@ extension Movie : Persistable {
     }
     
     func update(_ entity: T) {
-        
         entity.setValue(budget, forKey: "budget")
         entity.setValue(adult, forKey: "adult")
         entity.setValue(backdropPath, forKey: "backdropPath")
@@ -327,7 +325,5 @@ extension Movie : Persistable {
         } catch let e {
             print(e)
         }
-        
     }
-    
 }

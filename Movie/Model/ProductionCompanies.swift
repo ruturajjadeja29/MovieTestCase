@@ -55,20 +55,21 @@ struct ProductionCompanies {
 
 }
 
-extension ProductionCompanies : Equatable {
+
+//MARK:-
+//MARK:- Extenstion for Rx CoreData
+extension ProductionCompanies: Equatable {
     static func == (lhs: ProductionCompanies, rhs: ProductionCompanies) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
-extension ProductionCompanies : IdentifiableType {
+extension ProductionCompanies: IdentifiableType {
     typealias Identity = String
-    
     var identity: Identity { return "\(id ?? 0)" }
 }
 
-extension ProductionCompanies : Persistable {
-    
+extension ProductionCompanies: Persistable {
     typealias T = NSManagedObject
     
     static var entityName: String {
@@ -86,7 +87,6 @@ extension ProductionCompanies : Persistable {
     }
     
     func update(_ entity: T) {
-        
         entity.setValue(id, forKey: "id")
         entity.setValue(name, forKey: "name")
         entity.setValue(originCountry, forKey: "originCountry")
@@ -96,7 +96,5 @@ extension ProductionCompanies : Persistable {
         } catch let e {
             print(e)
         }
-        
     }
-    
 }
