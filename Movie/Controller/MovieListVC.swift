@@ -43,13 +43,6 @@ class MovieListVC: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        
-        if segue.identifier == "SegueMovieDetail", let movieDetailVC = segue.destination as? MovieDetailVC {
-            
-        }
-    }
 }
 
 extension MovieListVC {
@@ -90,6 +83,15 @@ extension MovieListVC {
         CAppdelegate?.persistentContainer.viewContext.rx.entities(Movie.self, sortDescriptors: [NSSortDescriptor(key: "id", ascending: false)]).map { movieList in
                 [AnimatableSectionModel(model: "", items: movieList)]
             }.bind(to: tblVMovieList.rx.items(dataSource: animatedDataSource)).disposed(by: disposeBag)
+        
+        Observable.zip(tblVMovieList.rx.itemSelected, tblVMovieList.rx.modelSelected(Movie.self)).bind { indexPath, movieModel in
+            
+            if let movieDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailVC") as? MovieDetailVC {
+                movieDetailVC.movieModel = movieModel
+                self.navigationController?.pushViewController(movieDetailVC, animated: true)
+            }
+            
+            }.disposed(by: disposeBag)
         
     }
     

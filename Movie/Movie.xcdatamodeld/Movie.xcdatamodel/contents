@@ -31,33 +31,6 @@
         <relationship name="productionCountries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TBLProductionCountries" inverseName="movie" inverseEntity="TBLProductionCountries" syncable="YES"/>
         <relationship name="spokenLanguages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TBLSpokenLanguages" inverseName="movie" inverseEntity="TBLSpokenLanguages" syncable="YES"/>
     </entity>
-    <entity name="TBLMovieDetail" representedClassName="TBLMovieDetail" syncable="YES" codeGenerationType="class">
-        <attribute name="adult" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="backdrop_path" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="belongs_to_collection" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="budget" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="genres" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="homepage" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="imdb_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="original_language" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="original_title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="overview" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="popularity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="poster_path" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="production_companies" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="production_countries" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="release_date" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="revenue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="runtime" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="spoken_languages" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tagline" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="video" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="vote_average" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="vote_count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-    </entity>
     <entity name="TBLProductionCompanies" representedClassName="TBLProductionCompanies" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -75,11 +48,10 @@
         <relationship name="movie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TBLMovie" inverseName="spokenLanguages" inverseEntity="TBLMovie" syncable="YES"/>
     </entity>
     <elements>
-        <element name="TBLMovie" positionX="-54" positionY="135" width="128" height="405"/>
         <element name="TBLGenres" positionX="-45" positionY="144" width="128" height="90"/>
+        <element name="TBLMovie" positionX="-54" positionY="135" width="128" height="405"/>
         <element name="TBLProductionCompanies" positionX="-36" positionY="153" width="128" height="105"/>
         <element name="TBLProductionCountries" positionX="-18" positionY="162" width="128" height="90"/>
         <element name="TBLSpokenLanguages" positionX="0" positionY="171" width="128" height="90"/>
-        <element name="TBLMovieDetail" positionX="9" positionY="144" width="128" height="420"/>
     </elements>
 </model>

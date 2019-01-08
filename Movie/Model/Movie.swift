@@ -170,9 +170,48 @@ extension Movie : Persistable {
         adult               = entity.value(forKey: "adult") as? Bool
         backdropPath       = entity.value(forKey: "backdropPath") as? String
         homepage       = entity.value(forKey: "homepage") as? String
-        genres           = entity.value(forKey: "genres") as? [Genres]
-        productionCompanies           = entity.value(forKey: "productionCompanies") as? [ProductionCompanies]
-        spokenLanguages           = entity.value(forKey: "spokenLanguages") as? [SpokenLanguages]
+        
+        var arrGenres = [Genres]()
+        if let arrGenresCoredata = (entity as? TBLMovie)?.genres {
+            for genreCoredata in arrGenresCoredata.allObjects {
+                if let genreCoredata = genreCoredata as? TBLGenres {
+                    arrGenres.append(Genres(entity: genreCoredata))
+                }
+            }
+        }
+        genres           = arrGenres
+        
+        
+        var arrProductionCompanies = [ProductionCompanies]()
+        if let arrProductionCompaniesCoredata = (entity as? TBLMovie)?.productionCompanies {
+            for productionCompanyCoredata in arrProductionCompaniesCoredata.allObjects {
+                if let productionCompanyCoredata = productionCompanyCoredata as? TBLProductionCompanies {
+                    arrProductionCompanies.append(ProductionCompanies(entity: productionCompanyCoredata))
+                }
+            }
+        }
+        productionCompanies           = arrProductionCompanies
+        
+        var arrSpokenLanguages = [SpokenLanguages]()
+        if let arrSpokenLanguagesCoredata = (entity as? TBLMovie)?.spokenLanguages {
+            for spokenLanguageCoredata in arrSpokenLanguagesCoredata.allObjects {
+                if let spokenLanguageCoredata = spokenLanguageCoredata as? TBLSpokenLanguages {
+                    arrSpokenLanguages.append(SpokenLanguages(entity: spokenLanguageCoredata))
+                }
+            }
+        }
+        spokenLanguages           = arrSpokenLanguages
+        
+        var arrProductionCountries = [ProductionCountries]()
+        if let arrProductionCountriesCoredata = (entity as? TBLMovie)?.productionCountries {
+            for productionCountryCoredata in arrProductionCountriesCoredata.allObjects {
+                if let productionCountryCoredata = productionCountryCoredata as? TBLSpokenLanguages {
+                    arrProductionCountries.append(ProductionCountries(entity: productionCountryCoredata))
+                }
+            }
+        }
+        productionCountries           = arrProductionCountries
+        
         productionCountries           = entity.value(forKey: "productionCountries") as? [ProductionCountries]
         id                  = entity.value(forKey: "id") as? Int64
         originalLanguage   = entity.value(forKey: "originalLanguage") as? String
@@ -198,10 +237,75 @@ extension Movie : Persistable {
         entity.setValue(adult, forKey: "adult")
         entity.setValue(backdropPath, forKey: "backdropPath")
         entity.setValue(homepage, forKey: "homepage")
-        entity.setValue(genres, forKey: "genres")
-        entity.setValue(productionCompanies, forKey: "productionCompanies")
-        entity.setValue(spokenLanguages, forKey: "spokenLanguages")
-        entity.setValue(productionCountries, forKey: "productionCountries")
+        
+        var arrGenres = [TBLGenres]()
+        for genre in (self.genres ?? []) {
+            try? CAppdelegate?.persistentContainer.viewContext.rx.update(genre)
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Genres.entityName)
+            fetchRequest.predicate = NSPredicate(format: "id == %d", genre.id ?? 0)
+            do {
+                if let genreDB = try CAppdelegate?.persistentContainer.viewContext.fetch(fetchRequest).last as? TBLGenres {
+                    arrGenres.append(genreDB)
+                }
+            } catch {
+                
+            }
+        }
+        entity.setValue(NSSet(array: arrGenres), forKey: "genres")
+        
+        
+        
+        var arrProductionCompanies = [TBLProductionCompanies]()
+        for productionCompany in (self.productionCompanies ?? []) {
+            try? CAppdelegate?.persistentContainer.viewContext.rx.update(productionCompany)
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: ProductionCompanies.entityName)
+            fetchRequest.predicate = NSPredicate(format: "id == %d", productionCompany.id ?? 0)
+            do {
+                if let productionCompanyDB = try CAppdelegate?.persistentContainer.viewContext.fetch(fetchRequest).last as? TBLProductionCompanies {
+                    arrProductionCompanies.append(productionCompanyDB)
+                }
+            } catch {
+                
+            }
+        }
+        entity.setValue(NSSet(array: arrProductionCompanies), forKey: "productionCompanies")
+        
+        
+        
+        var arrSpokenLanguages = [TBLSpokenLanguages]()
+        for spokenLanguage in (self.spokenLanguages ?? []) {
+            try? CAppdelegate?.persistentContainer.viewContext.rx.update(spokenLanguage)
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: SpokenLanguages.entityName)
+            fetchRequest.predicate = NSPredicate(format: "iso6391 == %@", spokenLanguage.iso6391 ?? "")
+            do {
+                if let spokenLanguageDB = try CAppdelegate?.persistentContainer.viewContext.fetch(fetchRequest).last as? TBLSpokenLanguages {
+                    arrSpokenLanguages.append(spokenLanguageDB)
+                }
+            } catch {
+                
+            }
+        }
+        entity.setValue(NSSet(array: arrSpokenLanguages), forKey: "spokenLanguages")
+        
+        
+        
+        var arrProductionCountries = [TBLProductionCountries]()
+        for productionCountry in (self.productionCountries ?? []) {
+            try? CAppdelegate?.persistentContainer.viewContext.rx.update(productionCountry)
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: ProductionCountries.entityName)
+            fetchRequest.predicate = NSPredicate(format: "iso31661 == %@", productionCountry.iso31661 ?? "")
+            do {
+                if let productionCountryDB = try CAppdelegate?.persistentContainer.viewContext.fetch(fetchRequest).last as? TBLProductionCountries {
+                    arrProductionCountries.append(productionCountryDB)
+                }
+            } catch {
+                
+            }
+        }
+        entity.setValue(NSSet(array: arrProductionCountries), forKey: "productionCountries")
+        
+        
+        
         entity.setValue(id, forKey: "id")
         entity.setValue(originalLanguage, forKey: "originalLanguage")
         entity.setValue(originalTitle, forKey: "originalTitle")

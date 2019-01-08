@@ -72,7 +72,7 @@ extension SpokenLanguages : Persistable {
     }
     
     static var primaryAttributeName: String {
-        return "id"
+        return "iso6391"
     }
     
     init(entity: T) {

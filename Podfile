@@ -12,8 +12,6 @@ target 'Movie' do
     # Image Loading
     pod 'Kingfisher'
     
-    pod 'ObjectMapper'
-
     # Reactive
     pod 'RxSwift'
     pod 'RxCocoa'

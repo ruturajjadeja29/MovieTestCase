@@ -8,6 +8,10 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
+import RxCoreData
+import RxDataSources
+import CoreData
 
 class MovieDetailVC: UIViewController {
     
@@ -18,26 +22,25 @@ class MovieDetailVC: UIViewController {
     @IBOutlet fileprivate weak var lblMovieTitle: UILabel!
     @IBOutlet fileprivate weak var lblMovieTagline: UILabel!
     
-    @IBOutlet fileprivate weak var tblVMovieDetail: UITableView! {
-        didSet {
-            tblVMovieDetail.estimatedRowHeight = 100.0
-            tblVMovieDetail.rowHeight = UITableView.automaticDimension
-        }
-    }
-    
-    @IBOutlet fileprivate weak var viewHeader: UIView! {
-        didSet {
-            viewHeader.CViewSetHeight(height: (CScreenWidth/375) * viewHeader.frame.height)
-        }
-    }
+    @IBOutlet fileprivate weak var lblOverview: UILabel!
+    @IBOutlet fileprivate weak var lblGenres: UILabel!
+    @IBOutlet fileprivate weak var lblDuration: UILabel!
+    @IBOutlet fileprivate weak var lblReleaseDate: UILabel!
+    @IBOutlet fileprivate weak var lblProductionCompanies: UILabel!
+    @IBOutlet fileprivate weak var lblProductionBudget: UILabel!
+    @IBOutlet fileprivate weak var lblRevenue: UILabel!
+    @IBOutlet fileprivate weak var lblLanguages: UILabel!
+
     
     // MARK: -
     // MARK: - Global Variables.
+    var movieModel : Movie?
     let disposeBag = DisposeBag()
     let imgHeaderUrl = "https://image.tmdb.org/t/p/w500"
     
+    
     // MARK: -
-    // MARK: - View Lifecycle.
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         initialize()
@@ -58,41 +61,70 @@ class MovieDetailVC: UIViewController {
 extension MovieDetailVC {
     
     func initialize() {
+        if let movieModel = movieModel {
+            MovieViewModel.shared.loadDetailForMovie(id: movieModel.id ?? 0)
+            self.configureViewAppearance()
+        }
         
-        MovieDetailViewModel.shared.loadMovieDetailsFromServer()
-        
-        self.configureViewAppearance()
     }
     
     fileprivate func configureViewAppearance() {
         addObserverAndSubscriber()
     }
     
-    fileprivate func configureHeader(movieHeader: MovieHeaderModel) {
+    fileprivate func configureHeader(movie: Movie) {
         
-        self.lblMovieTitle.text = movieHeader.title ?? ""
-        self.lblMovieTagline.text = movieHeader.tagline ?? ""
-        self.title = movieHeader.title ?? ""
+        self.lblMovieTitle.text = movie.title ?? ""
+        self.lblMovieTagline.text = movie.tagline ?? ""
+        self.title = movie.title ?? ""
         
-        if let urlBackDropPoster = movieHeader.backdrop_path {
+        if let urlBackDropPoster = movie.backdropPath {
             imgVCoverPoster.kf.setImage(with: (imgHeaderUrl + urlBackDropPoster).toURL)
         }
         
-        if let urlPoster = movieHeader.poster_path {
+        if let urlPoster = movie.posterPath {
             imgVPoster.kf.setImage(with: (imgHeaderUrl + urlPoster).toURL)
         }
     }
     
     fileprivate func addObserverAndSubscriber() {
         
-        //... Keep Observing for movieHeader Updates and Bind the Data.
-        MovieDetailViewModel.shared.movieHeader.asObservable().subscribe(onNext: { (movieHeader) in
-            self.configureHeader(movieHeader: movieHeader)
+        MovieViewModel.shared.isAPIRunning.asObservable().subscribe(onNext: { (isLoading) in
+            
+            if TBLMovie.allObjects?.count ?? 0 > 0 {
+//                self.activityLoader.stopAnimating()
+            }
+            
         }, onError: nil, onCompleted: nil).disposed(by: disposeBag)
         
-        //.. Keep Observing for movieDetails Updates and Bind the Data.
-        MovieDetailViewModel.shared.arrDetailCustom.asObservable().bind(to: tblVMovieDetail.rx.items(cellIdentifier: "MovieDetailTblCell", cellType:MovieDetailTblCell.self)) { (row, movieDetails, cell) in
-            cell.configureCell(movieDetails: movieDetails)
-            }.disposed(by: disposeBag)
+        //... Configure DataSource.
+        
+        
+        //... Creates and executes a fetch request and returns the fetched objects as an Observable array of Persistable.
+        
+        CAppdelegate?.persistentContainer.viewContext.rx.entities(Movie.self, predicate: NSPredicate(format: "id == %d", (movieModel?.id ?? 0))).asObservable().subscribe(onNext: { (movies) in
+            
+            if let movie = movies.last {
+                self.title = movie.title
+                
+                self.imgVCoverPoster.kf.setImage(with: (imgBaseURL + (movie.backdropPath ?? "")).toURL)
+                self.imgVPoster.kf.setImage(with: (imgBaseURL + (movie.posterPath ?? "")).toURL)
+                self.lblMovieTitle.text = movie.title
+                self.lblMovieTagline.text = movie.tagline
+                
+                self.lblOverview.text = movie.overview
+                self.lblGenres.text = MovieViewModel.shared.getAllGenresByNameOfMovie(movie)
+                
+                let duration = movie.runtime ?? 0
+                self.lblDuration.text = "\(duration) \((duration == 1 ? "Minute" : "Minutes"))"
+                
+                self.lblReleaseDate.text = movie.releaseDate
+                self.lblProductionCompanies.text = MovieViewModel.shared.getAllProductionCompaniesByNameOfMovie(movie)
+                self.lblProductionBudget.text = "$\(movie.budget ?? 0)"
+                self.lblRevenue.text = "$\(movie.revenue ?? 0)"
+                self.lblLanguages.text = MovieViewModel.shared.getAllLanguagesByNameOfMovie(movie)
+            }
+            
+        }).disposed(by: disposeBag)
     }
 }

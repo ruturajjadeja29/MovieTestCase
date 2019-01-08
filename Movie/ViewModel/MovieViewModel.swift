@@ -91,4 +91,27 @@ extension MovieViewModel {
         
     }
     
+    func loadDetailForMovie(id: Int64) {
+        _ = APIRequest.shared.movieDetails(movieID: id, successCompletion: { (response, status) in
+            
+            if let responseDict = response as? [String: Any] {
+                
+                try? CAppdelegate?.persistentContainer.viewContext.rx.update(Movie(object: responseDict))
+                
+            }
+        }, failureCompletion: nil)
+    }
+    
+    func getAllGenresByNameOfMovie(_ movie: Movie) -> String {
+        return movie.genres?.compactMap({$0.name}).joined(separator: ", ") ?? ""
+    }
+    
+    func getAllProductionCompaniesByNameOfMovie(_ movie: Movie) -> String {
+        return movie.productionCompanies?.compactMap({$0.name}).joined(separator: ", ") ?? ""
+    }
+    
+    func getAllLanguagesByNameOfMovie(_ movie: Movie) -> String {
+        return movie.spokenLanguages?.compactMap({$0.name}).joined(separator: ", ") ?? ""
+    }
+    
 }
