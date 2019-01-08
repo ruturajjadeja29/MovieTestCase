@@ -47,9 +47,7 @@ extension MovieViewModel {
                 self.isAPIRunning.value = false
             }
             
-        }, failureCompletion: { (message) in
-            
-        })
+        }, failureCompletion: nil)
     }
     
     func loadMovieDetailFromServer(byId id: Int64) {
@@ -78,3 +76,4 @@ extension MovieViewModel {
     }
     
 }
+

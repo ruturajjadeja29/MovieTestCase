@@ -223,7 +223,6 @@ extension Movie: Persistable {
         productionCompanies     = arrProductionCompanies
         spokenLanguages         = arrSpokenLanguages
         productionCountries     = arrProductionCountries
-        productionCountries     = entity.value(forKey: "productionCountries") as? [ProductionCountries]
         id                      = entity.value(forKey: "id") as? Int64
         originalLanguage        = entity.value(forKey: "originalLanguage") as? String
         originalTitle           = entity.value(forKey: "originalTitle") as? String
@@ -231,6 +230,7 @@ extension Movie: Persistable {
         popularity              = entity.value(forKey: "popularity") as? Double
         posterPath              = entity.value(forKey: "posterPath") as? String
         releaseDate             = entity.value(forKey: "releaseDate") as? String
+        revenue                 = entity.value(forKey: "revenue") as? Int64
         title                   = entity.value(forKey: "title") as? String
         video                   = entity.value(forKey: "video") as? Bool
         voteAverage             = entity.value(forKey: "voteAverage") as? Int64
@@ -316,6 +316,7 @@ extension Movie: Persistable {
         entity.setValue(popularity, forKey: "popularity")
         entity.setValue(posterPath, forKey: "posterPath")
         entity.setValue(releaseDate, forKey: "releaseDate")
+        entity.setValue(revenue, forKey: "revenue")
         entity.setValue(title, forKey: "title")
         entity.setValue(video, forKey: "video")
         entity.setValue(voteAverage, forKey: "voteAverage")

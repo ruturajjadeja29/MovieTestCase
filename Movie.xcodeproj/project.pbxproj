@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1B2DBADD15DEAC8A41C97F47 /* Pods_MovieTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18449792B4901E6BBA70AC39 /* Pods_MovieTests.framework */; };
+		682ADFFF21E4D0B30052BBAC /* ExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682ADFFE21E4D0B30052BBAC /* ExtensionViewController.swift */; };
+		682AE00121E4D2830052BBAC /* ExtensionUIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682AE00021E4D2830052BBAC /* ExtensionUIApplication.swift */; };
 		68B8BA9E21E365D60006E050 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B8BA9921E365D50006E050 /* Genres.swift */; };
 		68B8BA9F21E365D60006E050 /* ProductionCompanies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B8BA9A21E365D50006E050 /* ProductionCompanies.swift */; };
 		68B8BAA021E365D60006E050 /* ProductionCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B8BA9B21E365D50006E050 /* ProductionCountries.swift */; };
@@ -62,6 +64,8 @@
 		18449792B4901E6BBA70AC39 /* Pods_MovieTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D13E136BB4C5F72BB0AEA31 /* Pods_MovieUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		613DE2B4504CA334EF6B9679 /* Pods-MovieTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MovieTests/Pods-MovieTests.debug.xcconfig"; sourceTree = "<group>"; };
+		682ADFFE21E4D0B30052BBAC /* ExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionViewController.swift; sourceTree = "<group>"; };
+		682AE00021E4D2830052BBAC /* ExtensionUIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIApplication.swift; sourceTree = "<group>"; };
 		68B8BA9921E365D50006E050 /* Genres.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
 		68B8BA9A21E365D50006E050 /* ProductionCompanies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductionCompanies.swift; sourceTree = "<group>"; };
 		68B8BA9B21E365D50006E050 /* ProductionCountries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductionCountries.swift; sourceTree = "<group>"; };
@@ -252,10 +256,12 @@
 		68CB9F1A21DF6C5600ECB348 /* App Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				68CB9F2C21DF765000ECB348 /* ExtensionUIView.swift */,
 				68CB9F2E21DF766B00ECB348 /* MasterConstant.swift */,
+				68CB9F2C21DF765000ECB348 /* ExtensionUIView.swift */,
 				708FD38321E09B6000FABCD9 /* ExtensionString.swift */,
 				708FD38421E09B6600FABCD9 /* ExtensionURL.swift */,
+				682ADFFE21E4D0B30052BBAC /* ExtensionViewController.swift */,
+				682AE00021E4D2830052BBAC /* ExtensionUIApplication.swift */,
 			);
 			path = "App Extensions";
 			sourceTree = "<group>";
@@ -557,7 +563,9 @@
 				68B8BAA021E365D60006E050 /* ProductionCountries.swift in Sources */,
 				70BA2C1821E4B72000C7807A /* SwiftyJSON.swift in Sources */,
 				68CB9F1D21DF6CEA00ECB348 /* APIRequest.swift in Sources */,
+				682AE00121E4D2830052BBAC /* ExtensionUIApplication.swift in Sources */,
 				70BA2C1A21E4BC9900C7807A /* ParentVC.swift in Sources */,
+				682ADFFF21E4D0B30052BBAC /* ExtensionViewController.swift in Sources */,
 				708FD37C21E091E700FABCD9 /* MovieDetailVC.swift in Sources */,
 				708FD38621E09B6600FABCD9 /* ExtensionURL.swift in Sources */,
 				68B8BAA421E37D8C0006E050 /* MovieViewModel.swift in Sources */,

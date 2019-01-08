@@ -118,7 +118,8 @@ extension APIRequest {
             
         } else {
             //.. No Internet Connection.
-            failureCompletion?(ApplicationMessages.noInternetConnection)
+            CTopMostViewController.displayAPIErrorWith(title: ApplicationMessages.networkError, message: ApplicationMessages.noInternetConnection)
+            failureCompletion?("")
             //.. We can handle No Internet connection here at TopMost VC & retry options as well.
             return nil
         }

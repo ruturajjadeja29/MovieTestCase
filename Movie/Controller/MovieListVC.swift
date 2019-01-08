@@ -23,7 +23,7 @@ class MovieListVC: ParentVC {
     
     // MARK: -
     // MARK: - Global Variables.
-    let disposeBag = DisposeBag()
+    fileprivate let disposeBag = DisposeBag()
     
     
     // MARK: -
@@ -36,6 +36,7 @@ class MovieListVC: ParentVC {
 }
 
 extension MovieListVC {
+    
     fileprivate func initialize() {
         //...Load Data
         MovieViewModel.shared.loadMoviesFromServer()
@@ -86,4 +87,5 @@ extension MovieListVC {
         }.disposed(by: disposeBag)
         
     }
+    
 }
