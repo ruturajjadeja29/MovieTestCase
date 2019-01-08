@@ -79,30 +79,42 @@ struct Movie {
   ///
   /// - parameter json: JSON object from SwiftyJSON.
   public init(json: JSON) {
-    budget = json[SerializationKeys.budget].int64
-    backdropPath = json[SerializationKeys.backdropPath].string
-    revenue = json[SerializationKeys.revenue].int64
-    voteCount = json[SerializationKeys.voteCount].int64
-    overview = json[SerializationKeys.overview].string
-    voteAverage = json[SerializationKeys.voteAverage].int64
-    video = json[SerializationKeys.video].boolValue
-    imdbId = json[SerializationKeys.imdbId].string
-    id = json[SerializationKeys.id].int64
-    title = json[SerializationKeys.title].string
-    homepage = json[SerializationKeys.homepage].string
-    if let items = json[SerializationKeys.productionCompanies].array { productionCompanies = items.map { ProductionCompanies(json: $0) } }
-    posterPath = json[SerializationKeys.posterPath].string
-    adult = json[SerializationKeys.adult].boolValue
-    if let items = json[SerializationKeys.genres].array { genres = items.map { Genres(json: $0) } }
-    if let items = json[SerializationKeys.spokenLanguages].array { spokenLanguages = items.map { SpokenLanguages(json: $0) } }
-    status = json[SerializationKeys.status].string
-    runtime = json[SerializationKeys.runtime].int64
-    originalTitle = json[SerializationKeys.originalTitle].string
-    releaseDate = json[SerializationKeys.releaseDate].string
-    originalLanguage = json[SerializationKeys.originalLanguage].string
-    popularity = json[SerializationKeys.popularity].double
-    tagline = json[SerializationKeys.tagline].string
-    if let items = json[SerializationKeys.productionCountries].array { productionCountries = items.map { ProductionCountries(json: $0) } }
+    budget              = json[SerializationKeys.budget].int64
+    backdropPath        = json[SerializationKeys.backdropPath].string
+    revenue             = json[SerializationKeys.revenue].int64
+    voteCount           = json[SerializationKeys.voteCount].int64
+    overview            = json[SerializationKeys.overview].string
+    voteAverage         = json[SerializationKeys.voteAverage].int64
+    video               = json[SerializationKeys.video].boolValue
+    imdbId              = json[SerializationKeys.imdbId].string
+    id                  = json[SerializationKeys.id].int64
+    title               = json[SerializationKeys.title].string
+    homepage            = json[SerializationKeys.homepage].string
+    
+    if let items = json[SerializationKeys.productionCompanies].array {
+        productionCompanies = items.map { ProductionCompanies(json: $0) }
+    }
+    posterPath          = json[SerializationKeys.posterPath].string
+    adult               = json[SerializationKeys.adult].boolValue
+    
+    if let items = json[SerializationKeys.genres].array {
+        genres = items.map { Genres(json: $0) }
+    }
+    
+    if let items = json[SerializationKeys.spokenLanguages].array {
+        spokenLanguages = items.map { SpokenLanguages(json: $0) }
+    }
+    status              = json[SerializationKeys.status].string
+    runtime             = json[SerializationKeys.runtime].int64
+    originalTitle       = json[SerializationKeys.originalTitle].string
+    releaseDate         = json[SerializationKeys.releaseDate].string
+    originalLanguage    = json[SerializationKeys.originalLanguage].string
+    popularity          = json[SerializationKeys.popularity].double
+    tagline             = json[SerializationKeys.tagline].string
+    
+    if let items = json[SerializationKeys.productionCountries].array {
+        productionCountries = items.map { ProductionCountries(json: $0) }
+    }
   }
 
   /// Generates description of the object in the form of a NSDictionary.
@@ -165,11 +177,7 @@ extension Movie: Persistable {
     
     init(entity: T) {
         
-        budget        = entity.value(forKey: "budget") as? Int64
-        adult               = entity.value(forKey: "adult") as? Bool
-        backdropPath       = entity.value(forKey: "backdropPath") as? String
-        homepage       = entity.value(forKey: "homepage") as? String
-        
+        //...Preparing list by array
         var arrGenres = [Genres]()
         if let arrGenresCoredata = (entity as? TBLMovie)?.genres {
             for genreCoredata in arrGenresCoredata.allObjects {
@@ -178,8 +186,6 @@ extension Movie: Persistable {
                 }
             }
         }
-        genres           = arrGenres
-        
         
         var arrProductionCompanies = [ProductionCompanies]()
         if let arrProductionCompaniesCoredata = (entity as? TBLMovie)?.productionCompanies {
@@ -189,7 +195,6 @@ extension Movie: Persistable {
                 }
             }
         }
-        productionCompanies           = arrProductionCompanies
         
         var arrSpokenLanguages = [SpokenLanguages]()
         if let arrSpokenLanguagesCoredata = (entity as? TBLMovie)?.spokenLanguages {
@@ -199,7 +204,6 @@ extension Movie: Persistable {
                 }
             }
         }
-        spokenLanguages           = arrSpokenLanguages
         
         var arrProductionCountries = [ProductionCountries]()
         if let arrProductionCountriesCoredata = (entity as? TBLMovie)?.productionCountries {
@@ -209,33 +213,37 @@ extension Movie: Persistable {
                 }
             }
         }
-        productionCountries           = arrProductionCountries
         
-        productionCountries           = entity.value(forKey: "productionCountries") as? [ProductionCountries]
-        id                  = entity.value(forKey: "id") as? Int64
-        originalLanguage   = entity.value(forKey: "originalLanguage") as? String
-        originalTitle      = entity.value(forKey: "originalTitle") as? String
-        overview            = entity.value(forKey: "overview") as? String
-        popularity          = entity.value(forKey: "popularity") as? Double
-        posterPath         = entity.value(forKey: "posterPath") as? String
-        releaseDate        = entity.value(forKey: "releaseDate") as? String
-        title               = entity.value(forKey: "title") as? String
-        video               = entity.value(forKey: "video") as? Bool
-        voteAverage        = entity.value(forKey: "voteAverage") as? Int64
-        voteCount          = entity.value(forKey: "voteCount") as? Int64
-        runtime        = entity.value(forKey: "runtime") as? Int64
-        status               = entity.value(forKey: "status") as? String
-        tagline               = entity.value(forKey: "tagline") as? String
-        imdbId        = entity.value(forKey: "imdbId") as? String
-        
+        //...
+        budget                  = entity.value(forKey: "budget") as? Int64
+        adult                   = entity.value(forKey: "adult") as? Bool
+        backdropPath            = entity.value(forKey: "backdropPath") as? String
+        homepage                = entity.value(forKey: "homepage") as? String
+        genres                  = arrGenres
+        productionCompanies     = arrProductionCompanies
+        spokenLanguages         = arrSpokenLanguages
+        productionCountries     = arrProductionCountries
+        productionCountries     = entity.value(forKey: "productionCountries") as? [ProductionCountries]
+        id                      = entity.value(forKey: "id") as? Int64
+        originalLanguage        = entity.value(forKey: "originalLanguage") as? String
+        originalTitle           = entity.value(forKey: "originalTitle") as? String
+        overview                = entity.value(forKey: "overview") as? String
+        popularity              = entity.value(forKey: "popularity") as? Double
+        posterPath              = entity.value(forKey: "posterPath") as? String
+        releaseDate             = entity.value(forKey: "releaseDate") as? String
+        title                   = entity.value(forKey: "title") as? String
+        video                   = entity.value(forKey: "video") as? Bool
+        voteAverage             = entity.value(forKey: "voteAverage") as? Int64
+        voteCount               = entity.value(forKey: "voteCount") as? Int64
+        runtime                 = entity.value(forKey: "runtime") as? Int64
+        status                  = entity.value(forKey: "status") as? String
+        tagline                 = entity.value(forKey: "tagline") as? String
+        imdbId                  = entity.value(forKey: "imdbId") as? String
     }
     
     func update(_ entity: T) {
-        entity.setValue(budget, forKey: "budget")
-        entity.setValue(adult, forKey: "adult")
-        entity.setValue(backdropPath, forKey: "backdropPath")
-        entity.setValue(homepage, forKey: "homepage")
         
+        //...Preparing list by array
         var arrGenres = [TBLGenres]()
         for genre in (self.genres ?? []) {
             try? CAppdelegate?.persistentContainer.viewContext.rx.update(genre)
@@ -249,9 +257,6 @@ extension Movie: Persistable {
                 
             }
         }
-        entity.setValue(NSSet(array: arrGenres), forKey: "genres")
-        
-        
         
         var arrProductionCompanies = [TBLProductionCompanies]()
         for productionCompany in (self.productionCompanies ?? []) {
@@ -266,9 +271,6 @@ extension Movie: Persistable {
                 
             }
         }
-        entity.setValue(NSSet(array: arrProductionCompanies), forKey: "productionCompanies")
-        
-        
         
         var arrSpokenLanguages = [TBLSpokenLanguages]()
         for spokenLanguage in (self.spokenLanguages ?? []) {
@@ -283,9 +285,6 @@ extension Movie: Persistable {
                 
             }
         }
-        entity.setValue(NSSet(array: arrSpokenLanguages), forKey: "spokenLanguages")
-        
-        
         
         var arrProductionCountries = [TBLProductionCountries]()
         for productionCountry in (self.productionCountries ?? []) {
@@ -300,10 +299,16 @@ extension Movie: Persistable {
                 
             }
         }
+        
+        //...
+        entity.setValue(budget, forKey: "budget")
+        entity.setValue(adult, forKey: "adult")
+        entity.setValue(backdropPath, forKey: "backdropPath")
+        entity.setValue(homepage, forKey: "homepage")
+        entity.setValue(NSSet(array: arrGenres), forKey: "genres")
+        entity.setValue(NSSet(array: arrProductionCompanies), forKey: "productionCompanies")
+        entity.setValue(NSSet(array: arrSpokenLanguages), forKey: "spokenLanguages")
         entity.setValue(NSSet(array: arrProductionCountries), forKey: "productionCountries")
-        
-        
-        
         entity.setValue(id, forKey: "id")
         entity.setValue(originalLanguage, forKey: "originalLanguage")
         entity.setValue(originalTitle, forKey: "originalTitle")

@@ -26,7 +26,6 @@ class MovieViewModel {
     
     // MARK: -
     // MARK: - Rx-Swift Observable.
-    var movies: Variable<[[String:Any]]> = Variable([])
     var isAPIRunning: Variable<Bool> = Variable(true)
 }
 
@@ -36,33 +35,34 @@ class MovieViewModel {
 extension MovieViewModel {
     
     func loadMoviesFromServer() {
+        self.isAPIRunning.value = true
+        
         APIRequest.shared.movies(successCompletion: { (response, status) in
-            
             if let resultDict = response as? [String:Any],
                 let arrResult = resultDict["results"] as? [[String:Any]], arrResult.count > 0 {
                 
                 for json in arrResult {
                     try? CAppdelegate?.persistentContainer.viewContext.rx.update(Movie(object: json))
                 }
-                
-                self.movies.value = arrResult
                 self.isAPIRunning.value = false
             }
             
         }, failureCompletion: { (message) in
-            self.isAPIRunning.value = false
+            
         })
     }
     
-    func loadDetailForMovie(id: Int64) {
-        _ = APIRequest.shared.movieDetails(movieID: id, successCompletion: { (response, status) in
-            
+    func loadMovieDetailFromServer(byId id: Int64) {
+        self.isAPIRunning.value = true
+        
+        APIRequest.shared.movieDetails(movieID: id, successCompletion: { (response, status) in
             if let responseDict = response as? [String: Any] {
-                
                 try? CAppdelegate?.persistentContainer.viewContext.rx.update(Movie(object: responseDict))
-                
             }
-        }, failureCompletion: nil)
+            self.isAPIRunning.value = false
+        }, failureCompletion: { (message) in
+            
+        })
     }
     
     func getAllGenresByNameOfMovie(_ movie: Movie) -> String {

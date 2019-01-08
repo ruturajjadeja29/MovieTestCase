@@ -13,10 +13,13 @@ import RxCoreData
 import RxDataSources
 import CoreData
 
-class MovieDetailVC: UIViewController {
+class MovieDetailVC: ParentVC {
     
     // MARK: -
     // MARK: - @IBOutlets.
+    @IBOutlet fileprivate weak var scrollVDetail: UIScrollView!
+    @IBOutlet fileprivate weak var activityIndicatorView: UIActivityIndicatorView!
+    
     @IBOutlet fileprivate weak var imgVPoster: UIImageView!
     @IBOutlet fileprivate weak var imgVCoverPoster: UIImageView!
     @IBOutlet fileprivate weak var lblMovieTitle: UILabel!
@@ -36,7 +39,6 @@ class MovieDetailVC: UIViewController {
     // MARK: - Global Variables.
     var movieModel : Movie?
     let disposeBag = DisposeBag()
-    let imgHeaderUrl = "https://image.tmdb.org/t/p/w500"
     
     
     // MARK: -
@@ -46,14 +48,6 @@ class MovieDetailVC: UIViewController {
         initialize()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.barTintColor = CRGB(r: 41, g: 51, b: 71)
-        self.navigationController?.navigationBar.barStyle = .default
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-    }
 }
 
 // MARK: -
@@ -62,53 +56,33 @@ extension MovieDetailVC {
     
     func initialize() {
         if let movieModel = movieModel {
-            MovieViewModel.shared.loadDetailForMovie(id: movieModel.id ?? 0)
-            self.configureViewAppearance()
-        }
-        
-    }
-    
-    fileprivate func configureViewAppearance() {
-        addObserverAndSubscriber()
-    }
-    
-    fileprivate func configureHeader(movie: Movie) {
-        
-        self.lblMovieTitle.text = movie.title ?? ""
-        self.lblMovieTagline.text = movie.tagline ?? ""
-        self.title = movie.title ?? ""
-        
-        if let urlBackDropPoster = movie.backdropPath {
-            imgVCoverPoster.kf.setImage(with: (imgHeaderUrl + urlBackDropPoster).toURL)
-        }
-        
-        if let urlPoster = movie.posterPath {
-            imgVPoster.kf.setImage(with: (imgHeaderUrl + urlPoster).toURL)
+            //...Load Data
+            MovieViewModel.shared.loadMovieDetailFromServer(byId: movieModel.id ?? 0)
+            
+            //...Manage Observer and Subscriber
+            manageObserverAndSubscriber()
         }
     }
     
-    fileprivate func addObserverAndSubscriber() {
+    fileprivate func manageObserverAndSubscriber() {
         
+        //...Observing isAPIRunning property for activityIndicator.
         MovieViewModel.shared.isAPIRunning.asObservable().subscribe(onNext: { (isLoading) in
-            
-            if TBLMovie.allObjects?.count ?? 0 > 0 {
-//                self.activityLoader.stopAnimating()
+            if !isLoading {
+                self.scrollVDetail.isHidden = false
+                self.activityIndicatorView.stopAnimating()
             }
-            
         }, onError: nil, onCompleted: nil).disposed(by: disposeBag)
         
-        //... Configure DataSource.
         
-        
-        //... Creates and executes a fetch request and returns the fetched objects as an Observable array of Persistable.
-        
+        //...Create and execute a fetch request and return the fetched movie detail object as an Observable array of Persistable.
         CAppdelegate?.persistentContainer.viewContext.rx.entities(Movie.self, predicate: NSPredicate(format: "id == %d", (movieModel?.id ?? 0))).asObservable().subscribe(onNext: { (movies) in
             
             if let movie = movies.last {
                 self.title = movie.title
                 
-                self.imgVCoverPoster.kf.setImage(with: (imgBaseURL + (movie.backdropPath ?? "")).toURL)
-                self.imgVPoster.kf.setImage(with: (imgBaseURL + (movie.posterPath ?? "")).toURL)
+                self.imgVCoverPoster.kf.setImage(with: (ApplicationConstants.imageBaseURL + (movie.backdropPath ?? "")).toURL)
+                self.imgVPoster.kf.setImage(with: (ApplicationConstants.imageBaseURL + (movie.posterPath ?? "")).toURL)
                 self.lblMovieTitle.text = movie.title
                 self.lblMovieTagline.text = movie.tagline
                 

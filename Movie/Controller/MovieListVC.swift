@@ -13,31 +13,24 @@ import RxCoreData
 import RxDataSources
 import CoreData
 
-class MovieListVC: UIViewController {
+class MovieListVC: ParentVC {
     
     // MARK: -
     // MARK: - @IBOutlets.
     @IBOutlet fileprivate weak var tblVMovieList: UITableView!
-    @IBOutlet fileprivate weak var activityLoader: UIActivityIndicatorView!
+    @IBOutlet fileprivate weak var activityIndicatorView: UIActivityIndicatorView!
+    
     
     // MARK: -
     // MARK: - Global Variables.
     let disposeBag = DisposeBag()
+    
     
     // MARK: -
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         initialize()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.barTintColor = CRGB(r: 41, g: 51, b: 71)
-        self.navigationController?.navigationBar.barStyle = .default
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 
 }
@@ -54,13 +47,16 @@ extension MovieListVC {
     fileprivate func manageObserverAndSubscriber() {
         //...Observing isAPIRunning property for activityIndicator.
         MovieViewModel.shared.isAPIRunning.asObservable().subscribe(onNext: { (isLoading) in
-            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Movie.entityName)
-            do {
-                if let count = try CAppdelegate?.persistentContainer.viewContext.count(for: fetchRequest), count > 0 {
-                    self.activityLoader.stopAnimating()
+            if !isLoading {
+                let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Movie.entityName)
+                do {
+                    if let count = try CAppdelegate?.persistentContainer.viewContext.count(for: fetchRequest), count > 0 {
+                        self.tblVMovieList.isHidden = false
+                        self.activityIndicatorView.stopAnimating()
+                    }
+                } catch {
+                    
                 }
-            } catch {
-                
             }
         }, onError: nil, onCompleted: nil).disposed(by: disposeBag)
         
@@ -79,14 +75,15 @@ extension MovieListVC {
                 [AnimatableSectionModel(model: "", items: movieList)]
             }.bind(to: tblVMovieList.rx.items(dataSource: animatedDataSource)).disposed(by: disposeBag)
         
+        
+        
+        //...Observing UITableView row selection.
         Observable.zip(tblVMovieList.rx.itemSelected, tblVMovieList.rx.modelSelected(Movie.self)).bind { indexPath, movieModel in
-            
             if let movieDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailVC") as? MovieDetailVC {
                 movieDetailVC.movieModel = movieModel
                 self.navigationController?.pushViewController(movieDetailVC, animated: true)
             }
-            
-            }.disposed(by: disposeBag)
+        }.disposed(by: disposeBag)
         
     }
 }
